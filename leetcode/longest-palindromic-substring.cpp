@@ -1,11 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <assert.h>     /* assert */
-
-using namespace std;
-
-
 struct Node {
     int length;
     Node* suffix;
@@ -61,4 +53,23 @@ struct Eertree {
     ~Eertree () {
 		for (int i = 0; i < nodes.size(); i++) delete nodes[i];
 	}
+};
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        Eertree tree = Eertree();
+        for (int i = 0; i < s.size(); i++) tree.add(s[i]);
+        
+        int longest = 0;
+        Node* n = 0;
+        for (int i = 0; i < tree.nodes.size(); i++) {
+            if (tree.nodes[i]->length > longest) {
+                longest = tree.nodes[i]->length;
+                n = tree.nodes[i];
+            }
+        }
+        
+        return s.substr(n->index - longest, longest);
+    }
 };
